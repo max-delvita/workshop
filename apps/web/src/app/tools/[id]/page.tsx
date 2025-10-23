@@ -11,8 +11,9 @@ export function generateStaticParams() {
 	}));
 }
 
-export default function ToolPage({ params }: { params: { id: string } }) {
-	const tool = toolsData[params.id];
+export default async function ToolPage({ params }: { params: Promise<{ id: string }> }) {
+	const { id } = await params;
+	const tool = toolsData[id];
 
 	if (!tool) {
 		notFound();
@@ -79,6 +80,16 @@ export default function ToolPage({ params }: { params: { id: string } }) {
 							</CardHeader>
 							<CardContent className="space-y-4">
 								<p className="leading-relaxed">{step.content}</p>
+
+								{step.image && (
+									<div className="overflow-hidden rounded-lg border bg-muted">
+										<img
+											src={step.image.src}
+											alt={step.image.alt}
+											className="w-full h-auto"
+										/>
+									</div>
+								)}
 
 								{step.codeBlock && (
 									<div className="overflow-x-auto rounded-md border bg-muted p-4">

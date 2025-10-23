@@ -5,20 +5,20 @@ import { ArrowRight, Terminal, Zap, Container, Database, Code, Github, Layers } 
 
 const tools = [
 	{
-		id: "claude-code",
-		name: "Claude Code",
-		description: "AI-powered coding assistant that helps you write, understand, and debug code with natural language interactions.",
-		icon: Terminal,
-		setupType: "installation",
-		color: "text-orange-500",
-	},
-	{
 		id: "warp-ai",
 		name: "Warp AI",
 		description: "Modern terminal with AI command suggestions, intelligent completions, and collaborative features.",
 		icon: Zap,
 		setupType: "installation",
 		color: "text-blue-500",
+	},
+	{
+		id: "claude-code",
+		name: "Claude Code",
+		description: "AI-powered coding assistant that helps you write, understand, and debug code with natural language interactions.",
+		icon: Terminal,
+		setupType: "installation",
+		color: "text-orange-500",
 	},
 	{
 		id: "docker",
@@ -52,14 +52,6 @@ const tools = [
 		setupType: "signup",
 		color: "text-gray-800 dark:text-gray-200",
 	},
-	{
-		id: "better-t-stack",
-		name: "Better T-Stack",
-		description: "Modern full-stack development template with TypeScript, optimized for rapid AI-assisted development.",
-		icon: Layers,
-		setupType: "setup",
-		color: "text-indigo-500",
-	},
 ];
 
 export default function ToolsPage() {
@@ -82,14 +74,19 @@ export default function ToolsPage() {
 			</div>
 
 			<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-				{tools.map((tool) => {
+				{tools.map((tool, index) => {
 					const Icon = tool.icon;
 					return (
 						<Card key={tool.id} className="group relative overflow-hidden border-2 transition-all hover:shadow-2xl hover:scale-105">
 							<CardHeader className="pb-4">
 								<div className="mb-4 flex items-start justify-between">
-									<div className={`rounded-xl bg-muted p-4 ${tool.color}`}>
-										<Icon className="h-8 w-8" />
+									<div className="relative">
+										<div className={`rounded-xl bg-muted p-4 ${tool.color}`}>
+											<Icon className="h-8 w-8" />
+										</div>
+										<span className="absolute -top-2 -left-2 flex h-7 w-7 items-center justify-center rounded-full bg-purple-600 text-sm font-bold text-white shadow-lg">
+											{index + 1}
+										</span>
 									</div>
 									<span className="rounded-full bg-purple-600 px-4 py-1.5 text-xs font-bold text-white">
 										{tool.setupType === "installation" && "Install"}
