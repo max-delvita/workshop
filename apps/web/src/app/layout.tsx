@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "workshop",
-	description: "workshop",
+	title: "Context Engineering for AI Product Managers | Workshop",
+	description: "Pre-workshop setup guide and resources for the Context Engineering masterclass - learn to build full-stack applications with AI",
 };
 
 export default function RootLayout({
