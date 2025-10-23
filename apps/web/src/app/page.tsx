@@ -1,42 +1,58 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, MapPin, Clock } from "lucide-react";
 
 export default function Home() {
 	return (
-		<div className="container mx-auto max-w-5xl px-4 py-10">
+		<div className="container mx-auto max-w-6xl px-4 py-10">
 			{/* Hero Section */}
-			<section className="mb-16 text-center">
-				<h1 className="mb-6 text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
-					Context Engineering for AI Product Managers
-				</h1>
-				<p className="mb-4 text-2xl font-medium text-muted-foreground">
-					TGB Masterclass
-				</p>
-				<div className="flex flex-wrap justify-center gap-6 text-base text-muted-foreground mb-8">
-					<div className="flex items-center gap-2">
-						<Calendar className="h-5 w-5 text-purple-500" />
-						<span className="font-medium">Saturday, November 8, 2025</span>
+			<section className="relative mb-16 overflow-hidden rounded-3xl bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-purple-950/20 dark:via-pink-950/20 dark:to-blue-950/20 p-12 md:p-16">
+				<div className="absolute inset-0 bg-grid-purple-500/[0.05] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+				<div className="relative z-10">
+					<div className="flex flex-col items-center text-center mb-8">
+						<div className="mb-6 relative">
+							<div className="absolute inset-0 animate-pulse blur-2xl bg-purple-500/30 rounded-full" />
+							<Image
+								src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/ss/b8243a6d-5943-43a9-b0a7-fb4abc213618.png"
+								alt="Max Del Vita"
+								width={160}
+								height={160}
+								className="relative rounded-full border-4 border-purple-500 shadow-2xl"
+							/>
+						</div>
+						<h1 className="mb-4 text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+							Context Engineering<br />for AI Product Managers
+						</h1>
+						<p className="text-2xl md:text-3xl font-semibold text-purple-600 mb-6">
+							TGB Masterclass
+						</p>
+						<div className="flex flex-wrap justify-center gap-6 text-base text-muted-foreground mb-8">
+							<div className="flex items-center gap-2 bg-white/80 dark:bg-black/40 px-4 py-2 rounded-full">
+								<Calendar className="h-5 w-5 text-purple-500" />
+								<span className="font-medium">Saturday, November 8, 2025</span>
+							</div>
+							<div className="flex items-center gap-2 bg-white/80 dark:bg-black/40 px-4 py-2 rounded-full">
+								<Clock className="h-5 w-5 text-purple-500" />
+								<span className="font-medium">10:00 AM - 12:30 PM GMT+8</span>
+							</div>
+							<div className="flex items-center gap-2 bg-white/80 dark:bg-black/40 px-4 py-2 rounded-full">
+								<MapPin className="h-5 w-5 text-purple-500" />
+								<span className="font-medium">SQ Collective, Singapore</span>
+							</div>
+						</div>
+						<div className="flex flex-wrap justify-center gap-4">
+							<Button asChild size="lg" className="bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-500/50">
+								<Link href="/tools">View Setup Guide</Link>
+							</Button>
+							<Button asChild variant="outline" size="lg" className="border-2 border-purple-500 hover:bg-purple-50">
+								<a href="https://lu.ma/mu67ynky" target="_blank" rel="noopener noreferrer">
+									Event Details
+								</a>
+							</Button>
+						</div>
 					</div>
-					<div className="flex items-center gap-2">
-						<Clock className="h-5 w-5 text-purple-500" />
-						<span className="font-medium">10:00 AM - 12:30 PM GMT+8</span>
-					</div>
-					<div className="flex items-center gap-2">
-						<MapPin className="h-5 w-5 text-purple-500" />
-						<span className="font-medium">SQ Collective, Singapore</span>
-					</div>
-				</div>
-				<div className="flex justify-center gap-4">
-					<Button asChild size="lg">
-						<Link href="/tools">View Setup Guide</Link>
-					</Button>
-					<Button asChild variant="outline" size="lg">
-						<a href="https://lu.ma/mu67ynky" target="_blank" rel="noopener noreferrer">
-							Event Details
-						</a>
-					</Button>
 				</div>
 			</section>
 
@@ -184,8 +200,21 @@ export default function Home() {
 				<h2 className="mb-8 text-4xl font-bold">Masterclass Instructor</h2>
 				<Card className="border-2 border-purple-500">
 					<CardHeader>
-						<CardTitle className="text-2xl">Max Del Vita</CardTitle>
-						<CardDescription className="text-base">CEO & Co-founder, Symplehost.ai</CardDescription>
+						<div className="flex flex-col md:flex-row gap-6 items-start">
+							<div className="shrink-0">
+								<Image
+									src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/event-covers/ss/b8243a6d-5943-43a9-b0a7-fb4abc213618.png"
+									alt="Max Del Vita"
+									width={120}
+									height={120}
+									className="rounded-full border-4 border-purple-500"
+								/>
+							</div>
+							<div>
+								<CardTitle className="text-2xl">Max Del Vita</CardTitle>
+								<CardDescription className="text-base">CEO & Co-founder, Symplehost.ai</CardDescription>
+							</div>
+						</div>
 					</CardHeader>
 					<CardContent>
 						<p className="text-base leading-relaxed text-muted-foreground">
