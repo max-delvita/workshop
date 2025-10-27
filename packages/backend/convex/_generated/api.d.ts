@@ -9,6 +9,7 @@
  */
 
 import type * as healthCheck from "../healthCheck.js";
+import type * as participants from "../participants.js";
 import type * as todos from "../todos.js";
 
 import type {
@@ -27,6 +28,7 @@ import type {
  */
 declare const fullApi: ApiFromModules<{
   healthCheck: typeof healthCheck;
+  participants: typeof participants;
   todos: typeof todos;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
