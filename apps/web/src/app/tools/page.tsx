@@ -21,6 +21,14 @@ const tools = [
 		color: "text-orange-500",
 	},
 	{
+		id: "github",
+		name: "GitHub",
+		description: "Version control and collaboration platform for managing code repositories and project workflows.",
+		icon: Github,
+		setupType: "signup",
+		color: "text-gray-800 dark:text-gray-200",
+	},
+	{
 		id: "docker",
 		name: "Docker",
 		description: "Containerization platform for building, shipping, and running applications in isolated environments.",
@@ -29,28 +37,20 @@ const tools = [
 		color: "text-sky-500",
 	},
 	{
-		id: "serena-mcp",
-		name: "Serena MCP",
-		description: "Model Context Protocol server for enhanced AI context management and tool integration.",
+		id: "convex",
+		name: "Convex",
+		description: "Full-featured backend with cloud functions, database, and real-time sync engine that keeps your frontend updated automatically.",
 		icon: Database,
 		setupType: "installation",
 		color: "text-purple-500",
 	},
 	{
-		id: "context7",
-		name: "Context7",
-		description: "Context management tool for AI workflows, enabling better control over model inputs and outputs.",
-		icon: Code,
+		id: "bmad-method",
+		name: "Agile AI-driven Development",
+		description: "Universal AI Agent Framework for Agentic Agile Driven Development with specialized collaborative agents.",
+		icon: Layers,
 		setupType: "installation",
 		color: "text-green-500",
-	},
-	{
-		id: "github",
-		name: "GitHub",
-		description: "Version control and collaboration platform for managing code repositories and project workflows.",
-		icon: Github,
-		setupType: "signup",
-		color: "text-gray-800 dark:text-gray-200",
 	},
 ];
 
@@ -72,6 +72,73 @@ export default function ToolsPage() {
 					the workshop so we can troubleshoot any issues.
 				</p>
 			</div>
+
+			{/* Introduction and First Setup Steps */}
+			<Card className="mb-12 border-2 border-purple-500">
+				<CardHeader>
+					<CardTitle className="text-2xl">Introduction and First Setup Steps</CardTitle>
+					<CardDescription>Complete these foundational steps before installing individual tools</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<ol className="space-y-4">
+						<li className="flex items-start gap-3">
+							<span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-sm font-bold text-white">1</span>
+							<div>
+								<p className="font-semibold">Create a Work Folder</p>
+								<p className="text-sm text-muted-foreground">
+									Define a "work folder" where all projects will be installed and name it <strong>WORKSHOP</strong>.
+									This will help keep all your workshop materials organized in one place.
+								</p>
+							</div>
+						</li>
+						<li className="flex items-start gap-3">
+							<span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-sm font-bold text-white">2</span>
+							<div>
+								<p className="font-semibold">Install Warp</p>
+								<p className="text-sm text-muted-foreground">
+									See detailed instructions in Tool #1 below
+								</p>
+							</div>
+						</li>
+						<li className="flex items-start gap-3">
+							<span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-sm font-bold text-white">3</span>
+							<div>
+								<p className="font-semibold">Install Claude Code</p>
+								<p className="text-sm text-muted-foreground">
+									See detailed instructions in Tool #2 below
+								</p>
+							</div>
+						</li>
+						<li className="flex items-start gap-3">
+							<span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-sm font-bold text-white">4</span>
+							<div>
+								<p className="font-semibold">Sign up for GitHub</p>
+								<p className="text-sm text-muted-foreground">
+									See detailed instructions in Tool #3 below
+								</p>
+							</div>
+						</li>
+						<li className="flex items-start gap-3">
+							<span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-sm font-bold text-white">5</span>
+							<div>
+								<p className="font-semibold">Install GitHub Desktop</p>
+								<p className="text-sm text-muted-foreground">
+									See detailed instructions in Tool #3 below
+								</p>
+							</div>
+						</li>
+						<li className="flex items-start gap-3">
+							<span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-sm font-bold text-white">6</span>
+							<div>
+								<p className="font-semibold">Install Docker and Sign Up</p>
+								<p className="text-sm text-muted-foreground">
+									See detailed instructions in Tool #4 below
+								</p>
+							</div>
+						</li>
+					</ol>
+				</CardContent>
+			</Card>
 
 			<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 				{tools.map((tool, index) => {

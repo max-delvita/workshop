@@ -497,6 +497,28 @@ export const toolsData: Record<string, ToolGuide> = {
 				content: "Click on your profile icon in the top-right corner and select 'Your profile'. Add a profile picture (it can be a photo or an avatar), and optionally add a short bio. This helps people recognize you when you collaborate on projects!",
 				note: "You can always update your profile later, so don't worry about making it perfect right now.",
 			},
+			{
+				title: "Download GitHub Desktop",
+				description: "Install the desktop application for easier Git management",
+				content: "Visit desktop.github.com and click the 'Download for [Your OS]' button. The website automatically detects your operating system (Windows, macOS, or Linux). Run the downloaded installer and follow the installation wizard.",
+				note: "GitHub Desktop provides a visual interface for working with Git, making it much easier for beginners!",
+			},
+			{
+				title: "Sign In to GitHub Desktop",
+				description: "Connect GitHub Desktop to your GitHub account",
+				content: "Open GitHub Desktop after installation. Click 'Sign in to GitHub.com' and enter your GitHub username and password. This will connect the desktop app to your online GitHub account, allowing you to easily work with your repositories.",
+				codeBlock: {
+					language: "bash",
+					code: "# You can also verify Git is working from command line:\ngit --version",
+				},
+				note: "GitHub Desktop automatically configures Git on your computer with your GitHub credentials.",
+			},
+			{
+				title: "Configure Git",
+				description: "Set up your name and email for commits",
+				content: "In GitHub Desktop, go to Preferences/Options (File menu on Windows, GitHub Desktop menu on Mac). Under 'Git', make sure your name and email are set correctly. These will be attached to all your code contributions.",
+				note: "This information will be public in your commits, so use the email you want associated with your work.",
+			},
 		],
 		troubleshooting: [
 			{
@@ -599,6 +621,162 @@ cd my-workshop-project`,
 			"Explore the example components and pages",
 			"Try making a simple change and see it hot-reload",
 			"Read through the README.md for additional features",
+		],
+	},
+	convex: {
+		id: "convex",
+		name: "Convex",
+		description: "Full-featured backend platform with cloud functions, database, and real-time sync engine that keeps your frontend updated automatically.",
+		officialSite: "https://www.convex.dev",
+		prerequisites: [
+			"Node.js version 18 or higher - check with 'node --version'",
+			"Git installed - verify with 'git -v'",
+			"A GitHub account for authentication",
+			"Basic understanding of TypeScript/JavaScript",
+		],
+		steps: [
+			{
+				title: "Install Convex CLI",
+				description: "Install the Convex command-line tool globally",
+				content: "Open your terminal and run the following command to install Convex globally:",
+				codeBlock: {
+					language: "bash",
+					code: "npm install -g convex",
+				},
+				note: "This allows you to use the 'convex' command from anywhere on your system",
+			},
+			{
+				title: "Create a New Project (or Use Existing)",
+				description: "You can add Convex to an existing project or start fresh",
+				content: "For a new project, clone the Convex tutorial starter. For existing projects, navigate to your project directory:",
+				codeBlock: {
+					language: "bash",
+					code: "# New project (tutorial)\ngit clone https://github.com/get-convex/convex-tutorial.git\ncd convex-tutorial\nnpm install\n\n# Or for existing project\ncd your-project-name\nnpm install convex",
+				},
+			},
+			{
+				title: "Initialize Convex",
+				description: "Set up Convex in your project",
+				content: "Run the Convex development server. This will authenticate you and create your backend:",
+				codeBlock: {
+					language: "bash",
+					code: "npx convex dev",
+				},
+				note: "You'll be prompted to authenticate with GitHub. Accept the default configuration options when asked.",
+			},
+		],
+		troubleshooting: [
+			{
+				issue: "Authentication fails or times out",
+				solution: "Make sure you're signed in to GitHub and have granted necessary permissions. Try running 'npx convex logout' and then 'npx convex dev' again.",
+			},
+			{
+				issue: "Functions not updating",
+				solution: "Keep the 'npx convex dev' command running in the background. If you stop it, your backend won't sync. Restart it if you accidentally closed the terminal.",
+			},
+			{
+				issue: "'convex' command not found",
+				solution: "Close and reopen your terminal after installing. If that doesn't work, try installing locally in your project: npm install convex",
+			},
+			{
+				issue: "WebSocket connection errors",
+				solution: "Check your firewall settings. Convex uses WebSockets for real-time updates. Make sure your network allows WebSocket connections.",
+			},
+		],
+		nextSteps: [
+			"Explore the Convex dashboard to understand your data structure",
+			"Try adding database indexes for faster queries",
+			"Learn about Actions for integrating external APIs",
+			"Read the Convex docs on relationships and data modeling",
+			"Experiment with file storage using Convex file APIs",
+		],
+	},
+	"bmad-method": {
+		id: "bmad-method",
+		name: "Agile AI-driven Development (BMAD-METHOD)",
+		description: "Universal AI Agent Framework implementing Agentic Agile Driven Development with specialized collaborative agents for planning and execution.",
+		officialSite: "https://github.com/bmad-code-org/BMAD-METHOD",
+		prerequisites: [
+			"Node.js version 20 or higher - check with 'node --version'",
+			"Basic understanding of Agile development methodology",
+			"Familiarity with AI-assisted development tools",
+			"A project directory where you want to implement BMAD-METHOD",
+		],
+		steps: [
+			{
+				title: "Install BMAD-METHOD (Version 4.x)",
+				description: "Use npx to install the framework directly into your project",
+				content: "Navigate to your project directory and run the installation command. This will set up the BMAD-METHOD framework with all necessary configuration:",
+				codeBlock: {
+					language: "bash",
+					code: "npx bmad-method install",
+				},
+				note: "We're using version 4.x (the stable release), NOT v6-alpha. The installer will automatically detect if you have an existing installation and update accordingly.",
+			},
+			{
+				title: "Understand the Framework Components",
+				description: "BMAD-METHOD uses specialized AI agents for different phases",
+				content: "The framework coordinates multiple AI agents that work together:\n\n• Analyst Agent - Gathers requirements and creates user stories\n• PM (Product Manager) Agent - Defines project scope and priorities\n• Architect Agent - Designs system architecture and technical decisions\n• Scrum Master Agent - Transforms plans into actionable development stories\n• Developer Agents - Execute implementation based on context-rich stories",
+				note: "Each agent has specific expertise, ensuring comprehensive project planning and execution.",
+			},
+			{
+				title: "Initialize Your First Project",
+				description: "Set up a project using the BMAD framework",
+				content: "After installation, the framework will guide you through project initialization. You'll work with the Analyst, PM, and Architect agents to create a comprehensive Product Requirements Document (PRD) and Architecture document through an interactive planning phase.",
+				note: "This is a human-in-the-loop process - you'll collaborate with the agents to refine requirements and architecture.",
+			},
+			{
+				title: "Planning Phase - Create PRD and Architecture",
+				description: "Use the Agentic Planning Phase to establish project foundation",
+				content: "The planning phase involves:\n\n1. Interactive sessions with the Analyst agent to define user stories\n2. Collaboration with the PM agent to prioritize features\n3. Working with the Architect agent to design technical solutions\n4. Iterative refinement until the PRD and Architecture docs are complete",
+				note: "Take your time in this phase - comprehensive planning eliminates context loss during development.",
+			},
+			{
+				title: "Development Phase - Context-Engineered Stories",
+				description: "Transform plans into executable development stories",
+				content: "Once planning is complete, the Scrum Master agent processes your PRD and Architecture documents to generate development stories. Each story includes:\n\n• Full context from planning phase\n• Specific implementation guidance\n• Relevant architectural decisions\n• Clear acceptance criteria",
+				note: "These context-rich stories eliminate the common problem of developers missing crucial project context.",
+			},
+			{
+				title: "Integrate with Your IDE or Web UI",
+				description: "Access BMAD-METHOD through your preferred interface",
+				content: "BMAD-METHOD provides both IDE integration and a web-based UI for interacting with agents. Choose the interface that fits your workflow:\n\n• IDE Integration: Work directly in your code editor\n• Web UI: Visual interface for planning and story management",
+				codeBlock: {
+					language: "bash",
+					code: "# Start the web UI (if configured)\nnpm run bmad:ui",
+				},
+			},
+			{
+				title: "Customize with Expansion Packs",
+				description: "Extend BMAD-METHOD for domain-specific needs",
+				content: "The framework supports expansion packs that add specialized agents for different domains. This allows you to customize the framework for:\n\n• Web development\n• Mobile applications\n• Data science projects\n• Creative projects\n• Business strategy",
+				note: "Check the GitHub repository for available expansion packs and instructions on creating custom ones.",
+			},
+		],
+		troubleshooting: [
+			{
+				issue: "Node.js version incompatibility",
+				solution: "BMAD-METHOD requires Node.js v20 or higher. Update Node.js by downloading from nodejs.org, or use a version manager like nvm: 'nvm install 20 && nvm use 20'",
+			},
+			{
+				issue: "Installation overwrites custom configurations",
+				solution: "The installer automatically backs up your customizations with .bak files. Check your project directory for these backup files if you need to restore custom settings.",
+			},
+			{
+				issue: "Agents not responding or giving incomplete answers",
+				solution: "Make sure you're providing sufficient context in the planning phase. The quality of agent outputs depends on the detail you provide during requirements gathering.",
+			},
+			{
+				issue: "Confusion between v4.x and v6-alpha",
+				solution: "For this workshop, always use v4.x (the default). Version 6 is alpha and may have incomplete features. The standard installation command automatically installs v4.x.",
+			},
+		],
+		nextSteps: [
+			"Explore the GitHub repository for detailed documentation",
+			"Watch tutorial videos on the Agentic Planning Phase",
+			"Try creating a small project to understand the workflow",
+			"Join the BMAD community to share experiences and get support",
+			"Experiment with different agent configurations for your use case",
 		],
 	},
 };
