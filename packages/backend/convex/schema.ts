@@ -13,4 +13,12 @@ export default defineSchema({
 		email: v.string(),
 		linkedinProfile: v.string(),
 	}),
+	connections: defineTable({
+		participant1Id: v.id("participants"),
+		participant2Id: v.id("participants"),
+		analysis: v.string(),
+		commonalities: v.array(v.string()),
+		recommendations: v.string(),
+		createdAt: v.number(),
+	}),
 });

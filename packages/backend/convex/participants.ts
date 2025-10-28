@@ -52,3 +52,12 @@ export const deleteParticipant = mutation({
 		return { success: true };
 	},
 });
+
+export const getById = query({
+	args: {
+		id: v.id("participants"),
+	},
+	handler: async (ctx, args) => {
+		return await ctx.db.get(args.id);
+	},
+});

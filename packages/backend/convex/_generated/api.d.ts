@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as analyzeConnection from "../analyzeConnection.js";
+import type * as connections from "../connections.js";
 import type * as healthCheck from "../healthCheck.js";
 import type * as participants from "../participants.js";
 import type * as todos from "../todos.js";
@@ -27,6 +29,8 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  analyzeConnection: typeof analyzeConnection;
+  connections: typeof connections;
   healthCheck: typeof healthCheck;
   participants: typeof participants;
   todos: typeof todos;
