@@ -27,6 +27,67 @@ export const analyzeConnection = action({
 		}
 
 		try {
+			// Fetch LinkedIn profile data using our LinkedIn Agent Service
+			const linkedinAgentUrl = process.env.LINKEDIN_AGENT_URL || 'http://localhost:3002';
+
+			console.log("Fetching LinkedIn profiles via LinkedIn Agent Service...");
+
+			// Call the LinkedIn Agent Service to fetch profiles
+			const agentResponse = await fetch(`${linkedinAgentUrl}/fetch-profiles`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					profileUrls: [
+						participant1.linkedinProfile,
+						participant2.linkedinProfile
+					]
+				})
+			});
+
+			if (!agentResponse.ok) {
+				const errorText = await agentResponse.text();
+				throw new Error(`LinkedIn Agent Service error (${agentResponse.status}): ${errorText}`);
+			}
+
+			const { success, profiles } = await agentResponse.json();
+
+			if (!success || !profiles || profiles.length !== 2) {
+				throw new Error("Failed to fetch both LinkedIn profiles from agent service");
+			}
+
+			const [profile1Data, profile2Data] = profiles;
+
+			if (!profile1Data || !profile2Data) {
+				throw new Error("One or both profiles returned null from agent service");
+			}
+
+			console.log("LinkedIn profiles fetched successfully via agent service");
+
+			// Format profile data for AI analysis
+			const formatProfile = (profile: any) => {
+				return `
+Name: ${profile.full_name || 'Unknown'}
+Headline: ${profile.headline || 'N/A'}
+Location: ${profile.city ? `${profile.city}, ${profile.country}` : 'N/A'}
+Summary: ${profile.summary || 'N/A'}
+
+Experience:
+${profile.experiences?.map((exp: any) => `- ${exp.title} at ${exp.company} (${exp.starts_at?.year || 'N/A'} - ${exp.ends_at?.year || 'Present'})`).join('\n') || 'N/A'}
+
+Education:
+${profile.education?.map((edu: any) => `- ${edu.degree_name || 'Degree'} in ${edu.field_of_study || 'N/A'} from ${edu.school} (${edu.starts_at?.year || 'N/A'} - ${edu.ends_at?.year || 'N/A'})`).join('\n') || 'N/A'}
+
+Skills:
+${profile.skills?.join(', ') || 'N/A'}
+
+Languages:
+${profile.languages?.join(', ') || 'N/A'}
+
+Certifications:
+${profile.accomplishment_courses?.map((cert: any) => cert.name).join(', ') || 'N/A'}
+`;
+			};
+
 			// Use Vercel AI SDK with Anthropic provider
 			const result = await generateText({
 				model: anthropic("claude-sonnet-4-20250514"),
@@ -38,18 +99,16 @@ export const analyzeConnection = action({
 5. Common groups, companies, or educational institutions
 
 Be specific, actionable, and focus on creating meaningful professional connections.`,
-				prompt: `Analyze the LinkedIn profiles for these two professionals and provide a detailed connection analysis:
+				prompt: `Analyze these two LinkedIn profiles and provide a detailed connection analysis:
 
-Person 1:
-- Name: ${participant1.firstName} ${participant1.lastName}
-- LinkedIn: ${participant1.linkedinProfile}
+===== PERSON 1 =====
+${formatProfile(profile1Data)}
 
-Person 2:
-- Name: ${participant2.firstName} ${participant2.lastName}
-- LinkedIn: ${participant2.linkedinProfile}
+===== PERSON 2 =====
+${formatProfile(profile2Data)}
 
 Please provide:
-1. A list of commonalities (shared connections, interests, background, etc.)
+1. A list of commonalities (shared connections, interests, background, skills, education, location, etc.)
 2. Specific recommendations for how they can connect meaningfully
 3. Suggested conversation starters based on their profiles
 

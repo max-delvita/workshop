@@ -24,7 +24,7 @@ export default function ParticipantsPage() {
 	const [analysisResult, setAnalysisResult] = useState<any>(null);
 
 	const participants = useQuery(api.participants.getAll);
-	// const analyzeConnection = useAction(api.connections.analyzeConnection);
+	const analyzeConnection = useAction(api.analyzeConnection.analyzeConnection);
 
 	// Filter participants based on search query
 	const filteredParticipants = useMemo(() => {
@@ -53,27 +53,12 @@ export default function ParticipantsPage() {
 		setAnalysisResult(null);
 
 		try {
-			// Temporarily show a placeholder message
-			// const result = await analyzeConnection({
-			// 	participant1Id: selectedParticipant1 as Id<"participants">,
-			// 	participant2Id: selectedParticipant2 as Id<"participants">,
-			// });
-			// setAnalysisResult(result);
-
-			// Placeholder for now
-			setTimeout(() => {
-				setAnalysisResult({
-					success: true,
-					commonalities: ["Both work in tech", "Based in same city", "Share mutual connections"],
-					recommendations: "Consider introducing them at an industry event or facilitating a virtual coffee chat to discuss their common interests in technology and innovation.",
-					conversationStarters: [
-						"Recent projects in AI/ML",
-						"Local tech community events",
-						"Favorite productivity tools"
-					]
-				});
-				setIsAnalyzing(false);
-			}, 2000);
+			const result = await analyzeConnection({
+				participant1Id: selectedParticipant1 as Id<"participants">,
+				participant2Id: selectedParticipant2 as Id<"participants">,
+			});
+			setAnalysisResult(result);
+			setIsAnalyzing(false);
 		} catch (error) {
 			console.error("Error analyzing connection:", error);
 			setIsAnalyzing(false);
