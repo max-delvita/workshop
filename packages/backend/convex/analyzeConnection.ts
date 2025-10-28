@@ -1,11 +1,11 @@
 "use node";
-// @ts-nocheck
 
 import { action } from "./_generated/server";
 import { v } from "convex/values";
 import { generateText } from "ai";
 import { anthropic } from "@ai-sdk/anthropic";
 import { internal } from "./_generated/api";
+import type { ActionCtx } from "./_generated/server";
 
 // Action to analyze connection between two participants using Vercel AI SDK
 export const analyzeConnection = action({
@@ -13,12 +13,19 @@ export const analyzeConnection = action({
 		participant1Id: v.id("participants"),
 		participant2Id: v.id("participants"),
 	},
-	handler: async (ctx, args) => {
+	handler: async (ctx: ActionCtx, args: { participant1Id: any; participant2Id: any }): Promise<{
+		success: boolean;
+		connectionId: any;
+		analysis: string;
+		commonalities: string[];
+		recommendations: string;
+		conversationStarters: string[];
+	}> => {
 		// Get participant data
-		const participant1 = await ctx.runQuery(internal.participants.getById, {
+		const participant1 = await ctx.runQuery(internal.participants.getByIdInternal, {
 			id: args.participant1Id,
 		});
-		const participant2 = await ctx.runQuery(internal.participants.getById, {
+		const participant2 = await ctx.runQuery(internal.participants.getByIdInternal, {
 			id: args.participant2Id,
 		});
 
@@ -64,7 +71,7 @@ export const analyzeConnection = action({
 			console.log("LinkedIn profiles fetched successfully via agent service");
 
 			// Format profile data for AI analysis
-			const formatProfile = (profile: any) => {
+			const formatProfile = (profile: any): string => {
 				return `
 Name: ${profile.full_name || 'Unknown'}
 Headline: ${profile.headline || 'N/A'}
@@ -147,7 +154,7 @@ Format your response as JSON with these keys:
 			}
 
 			// Save the analysis to database
-			const connectionId = await ctx.runMutation(internal.connections.insertConnection, {
+			const connectionId = await ctx.runMutation(internal.connections.insertConnectionInternal, {
 				participant1Id: args.participant1Id,
 				participant2Id: args.participant2Id,
 				analysis: response,

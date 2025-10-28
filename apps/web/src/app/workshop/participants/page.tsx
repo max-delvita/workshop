@@ -14,7 +14,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { Id } from "@workshop/backend/convex/_generated/dataModel";
+import type { Doc, Id } from "@workshop/backend/convex/_generated/dataModel";
 
 export default function ParticipantsPage() {
 	const [searchQuery, setSearchQuery] = useState("");
@@ -33,15 +33,15 @@ export default function ParticipantsPage() {
 
 		const query = searchQuery.toLowerCase();
 		return participants.filter(
-			(p) =>
+			(p: Doc<"participants">) =>
 				p.firstName.toLowerCase().includes(query) ||
 				p.lastName.toLowerCase().includes(query)
 		);
 	}, [participants, searchQuery]);
 
 	// Get selected participant objects
-	const participant1 = participants?.find((p) => p._id === selectedParticipant1);
-	const participant2 = participants?.find((p) => p._id === selectedParticipant2);
+	const participant1 = participants?.find((p: Doc<"participants">) => p._id === selectedParticipant1);
+	const participant2 = participants?.find((p: Doc<"participants">) => p._id === selectedParticipant2);
 
 	// Check if both participants are selected
 	const canConnect = selectedParticipant1 && selectedParticipant2 && selectedParticipant1 !== selectedParticipant2;
@@ -102,7 +102,7 @@ export default function ParticipantsPage() {
 										<SelectValue placeholder="Select a participant..." />
 									</SelectTrigger>
 									<SelectContent>
-										{participants?.map((p) => (
+										{participants?.map((p: Doc<"participants">) => (
 											<SelectItem
 												key={p._id}
 												value={p._id}
@@ -165,7 +165,7 @@ export default function ParticipantsPage() {
 										<SelectValue placeholder="Select a participant..." />
 									</SelectTrigger>
 									<SelectContent>
-										{participants?.map((p) => (
+										{participants?.map((p: Doc<"participants">) => (
 											<SelectItem
 												key={p._id}
 												value={p._id}
@@ -342,7 +342,7 @@ export default function ParticipantsPage() {
 			) : (
 				/* Participants Grid */
 				<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-					{filteredParticipants.map((participant) => (
+					{filteredParticipants.map((participant: Doc<"participants">) => (
 						<Card
 							key={participant._id}
 							className="group relative overflow-hidden border-2 transition-all hover:shadow-xl hover:scale-105"

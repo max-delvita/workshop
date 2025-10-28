@@ -1,4 +1,4 @@
-import { query, mutation } from "./_generated/server";
+import { query, mutation, internalQuery } from "./_generated/server";
 import { v } from "convex/values";
 
 export const getAll = query({
@@ -54,6 +54,16 @@ export const deleteParticipant = mutation({
 });
 
 export const getById = query({
+	args: {
+		id: v.id("participants"),
+	},
+	handler: async (ctx, args) => {
+		return await ctx.db.get(args.id);
+	},
+});
+
+// Internal version of getById for use in actions
+export const getByIdInternal = internalQuery({
 	args: {
 		id: v.id("participants"),
 	},

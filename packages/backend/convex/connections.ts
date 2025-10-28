@@ -1,4 +1,4 @@
-import { query, mutation } from "./_generated/server";
+import { query, mutation, internalMutation } from "./_generated/server";
 import { v } from "convex/values";
 import type { Id } from "./_generated/dataModel";
 
@@ -39,6 +39,29 @@ export const getConnectionAnalysis = query({
 
 // Mutation to create a connection record
 export const insertConnection = mutation({
+	args: {
+		participant1Id: v.id("participants"),
+		participant2Id: v.id("participants"),
+		analysis: v.string(),
+		commonalities: v.array(v.string()),
+		recommendations: v.string(),
+		createdAt: v.number(),
+	},
+	handler: async (ctx, args) => {
+		const connectionId = await ctx.db.insert("connections", {
+			participant1Id: args.participant1Id,
+			participant2Id: args.participant2Id,
+			analysis: args.analysis,
+			commonalities: args.commonalities,
+			recommendations: args.recommendations,
+			createdAt: args.createdAt,
+		});
+		return connectionId;
+	},
+});
+
+// Internal version of insertConnection for use in actions
+export const insertConnectionInternal = internalMutation({
 	args: {
 		participant1Id: v.id("participants"),
 		participant2Id: v.id("participants"),

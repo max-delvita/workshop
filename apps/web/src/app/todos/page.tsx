@@ -15,7 +15,7 @@ import { useState } from "react";
 
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@workshop/backend/convex/_generated/api";
-import type { Id } from "@workshop/backend/convex/_generated/dataModel";
+import type { Doc, Id } from "@workshop/backend/convex/_generated/dataModel";
 
 export default function TodosPage() {
 	const [newTodoText, setNewTodoText] = useState("");
@@ -71,7 +71,7 @@ export default function TodosPage() {
 						<p className="py-4 text-center">No todos yet. Add one above!</p>
 					) : (
 						<ul className="space-y-2">
-							{todos.map((todo) => (
+							{todos.map((todo: Doc<"todos">) => (
 								<li
 									key={todo._id}
 									className="flex items-center justify-between rounded-md border p-2"
