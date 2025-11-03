@@ -3,6 +3,7 @@ export interface ToolGuide {
 	name: string;
 	description: string;
 	officialSite: string;
+	videoEmbedUrl?: string;
 	prerequisites?: string[];
 	steps: {
 		title: string;
@@ -31,6 +32,7 @@ export const toolsData: Record<string, ToolGuide> = {
 		name: "Claude Code",
 		description: "AI-powered coding assistant that helps you write, understand, and debug code with natural language interactions.",
 		officialSite: "https://docs.claude.com/en/docs/claude-code/overview",
+		videoEmbedUrl: "https://supercut.ai/embed/e46912d3-4a42-4466-82c6-a886c5e16e2d/7b13X-J6pAl9Erw76uDjQo?embed=sidebar",
 		prerequisites: [
 			"A computer with macOS, Windows, or Linux",
 			"At least 4GB of available memory (RAM)",
@@ -116,6 +118,7 @@ export const toolsData: Record<string, ToolGuide> = {
 		name: "Warp AI",
 		description: "Modern terminal with AI command suggestions, intelligent completions, and collaborative features.",
 		officialSite: "https://www.warp.dev",
+		videoEmbedUrl: "https://supercut.ai/embed/e46912d3-4a42-4466-82c6-a886c5e16e2d/IQP-QzzLFj746VjF8h5TyL?embed=sidebar",
 		prerequisites: [
 			"A Mac computer with macOS 10.15 or newer (Catalina or later)",
 			"OR a Linux computer (Ubuntu, Fedora, or other distributions)",

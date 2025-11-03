@@ -2,8 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle2, ExternalLink, AlertCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ExternalLink, AlertCircle, Play } from "lucide-react";
 import { toolsData } from "@/lib/tools-data";
+import { VideoModal } from "@/components/video-modal";
 
 export function generateStaticParams() {
 	return Object.keys(toolsData).map((id) => ({
@@ -33,14 +34,36 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
 
 			{/* Header */}
 			<div className="mb-8">
-				<h1 className="mb-3 text-4xl font-bold tracking-tight">{tool.name}</h1>
-				<p className="mb-4 text-lg text-muted-foreground">{tool.description}</p>
-				<Button asChild variant="outline">
-					<a href={tool.officialSite} target="_blank" rel="noopener noreferrer">
-						Official Website
-						<ExternalLink className="ml-2 h-4 w-4" />
-					</a>
-				</Button>
+				<div className="flex flex-col sm:flex-row gap-6 items-start mb-4">
+					<div className="flex-1">
+						<h1 className="mb-3 text-4xl font-bold tracking-tight">{tool.name}</h1>
+						<p className="mb-4 text-lg text-muted-foreground">{tool.description}</p>
+						<Button asChild variant="outline">
+							<a href={tool.officialSite} target="_blank" rel="noopener noreferrer">
+								Official Website
+								<ExternalLink className="ml-2 h-4 w-4" />
+							</a>
+						</Button>
+					</div>
+
+					{/* Video Tutorial */}
+					{tool.videoEmbedUrl && (
+						<div className="shrink-0">
+							<VideoModal embedUrl={tool.videoEmbedUrl}>
+								<button className="group relative overflow-hidden rounded-lg border-2 border-purple-500 bg-gradient-to-br from-purple-600 to-purple-400 transition-all hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 w-56">
+									<div className="relative z-10 flex flex-col items-center justify-center text-white p-6">
+										<div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-all group-hover:scale-110 group-hover:bg-white/30">
+											<Play className="h-6 w-6 fill-white" />
+										</div>
+										<h3 className="text-sm font-bold">Watch Setup Video</h3>
+										<p className="mt-0.5 text-xs text-purple-100">Quick tutorial</p>
+									</div>
+									<div className="absolute inset-0 bg-black/0 transition-all group-hover:bg-black/10" />
+								</button>
+							</VideoModal>
+						</div>
+					)}
+				</div>
 			</div>
 
 			{/* Prerequisites */}
