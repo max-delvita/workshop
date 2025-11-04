@@ -12,6 +12,7 @@ import type * as analyzeConnection from "../analyzeConnection.js";
 import type * as connections from "../connections.js";
 import type * as healthCheck from "../healthCheck.js";
 import type * as participants from "../participants.js";
+import type * as tally from "../tally.js";
 import type * as todos from "../todos.js";
 
 import type {
@@ -33,6 +34,7 @@ declare const fullApi: ApiFromModules<{
   connections: typeof connections;
   healthCheck: typeof healthCheck;
   participants: typeof participants;
+  tally: typeof tally;
   todos: typeof todos;
 }>;
 declare const fullApiWithMounts: typeof fullApi;

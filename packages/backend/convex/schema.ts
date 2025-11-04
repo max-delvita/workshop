@@ -21,4 +21,23 @@ export default defineSchema({
 		recommendations: v.string(),
 		createdAt: v.number(),
 	}),
+	tallySubmissions: defineTable({
+		formId: v.string(),
+		submissionId: v.string(),
+		submittedAt: v.optional(v.number()),
+		completed: v.boolean(),
+		syncedAt: v.number(),
+	})
+		.index("by_form_submission", ["formId", "submissionId"])
+		.index("by_form_synced", ["formId", "syncedAt"]),
+	tallyAnswers: defineTable({
+		submissionId: v.id("tallySubmissions"),
+		questionId: v.string(),
+		label: v.string(),
+		type: v.string(),
+		valueString: v.optional(v.string()),
+		valueNumber: v.optional(v.number()),
+		valueBoolean: v.optional(v.boolean()),
+		valueList: v.optional(v.array(v.string())),
+	}).index("by_submission", ["submissionId"]).index("by_question", ["questionId"]),
 });

@@ -46,7 +46,7 @@ export interface AggregatedTallyData {
 }
 
 const TEXT_SAMPLE_LIMIT = 3;
-const EXCLUDED_QUESTION_KEYS = new Set(["Wz0E5Q", "QV0WQX", "7xZL1R"]);
+export const EXCLUDED_QUESTION_KEYS = new Set(["Wz0E5Q", "QV0WQX", "7xZL1R"]);
 
 function isChoiceType(type: string) {
 	const normalized = type.toLowerCase();

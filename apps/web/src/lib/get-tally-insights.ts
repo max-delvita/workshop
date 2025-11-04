@@ -1,9 +1,8 @@
-import { cache } from "react";
-
 import type { AggregatedTallyData } from "./tally-analytics";
 import { aggregateTallyResponses } from "./tally-analytics";
 import { fetchFormResponses } from "./tally";
 import { generateTallySummary } from "./tally-summary";
+import { persistTallySubmissions } from "./persist-tally";
 
 export type TallyInsightsResult =
 	| {
@@ -17,9 +16,13 @@ export type TallyInsightsResult =
 			message: string;
 	  };
 
-async function buildInsights(): Promise<TallyInsightsResult> {
+export async function getTallyInsights(): Promise<TallyInsightsResult> {
 	try {
 		const responses = await fetchFormResponses();
+
+		// Fire-and-forget sync to Convex; failure is logged but shouldn't break the page.
+		void persistTallySubmissions(responses);
+
 		const aggregated = aggregateTallyResponses(responses);
 		const { summary, model } = await generateTallySummary(aggregated);
 
@@ -40,5 +43,3 @@ async function buildInsights(): Promise<TallyInsightsResult> {
 		};
 	}
 }
-
-export const getTallyInsights = cache(buildInsights);
