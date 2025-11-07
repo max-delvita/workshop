@@ -20,8 +20,18 @@ export async function getTallyInsights(): Promise<TallyInsightsResult> {
 	try {
 		const responses = await fetchFormResponses();
 
-		// Fire-and-forget sync to Convex; failure is logged but shouldn't break the page.
-		void persistTallySubmissions(responses);
+		// Persist to Convex and wait for completion
+		try {
+			const persistResult = await persistTallySubmissions(responses);
+			if (persistResult) {
+				console.log(
+					`Successfully persisted ${persistResult.total} submissions to Convex (${persistResult.inserted} new, ${persistResult.updated} updated)`
+				);
+			}
+		} catch (convexError) {
+			// Log but don't fail the page if Convex sync fails
+			console.error("Failed to sync to Convex, but continuing with page render:", convexError);
+		}
 
 		const aggregated = aggregateTallyResponses(responses);
 		const { summary, model } = await generateTallySummary(aggregated);
