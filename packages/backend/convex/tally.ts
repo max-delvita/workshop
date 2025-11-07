@@ -30,6 +30,7 @@ export const syncSubmissions = mutation({
 	handler: async (ctx, args) => {
 		let upserts = 0;
 		let inserts = 0;
+		let skipped = 0;
 
 		for (const submission of args.submissions) {
 			const existing = await ctx.db
@@ -41,12 +42,29 @@ export const syncSubmissions = mutation({
 
 			const submittedAtMs = submission.submittedAt ?? null;
 			const completed = submission.completed ?? false;
+
+			// Extract respondent info from answers
+			const nameAnswer = submission.answers.find(a => a.questionId === "Wz0E5Q");
+			const linkedInAnswer = submission.answers.find(a => a.questionId === "7xZL1R");
+
+			const respondentName = nameAnswer?.valueString;
+			const respondentLinkedIn = linkedInAnswer?.valueString;
+
+			// Skip if submission hasn't changed (same submittedAt timestamp) AND has respondent data
+			const hasRespondentData = existing?.respondentName !== undefined || existing?.respondentLinkedIn !== undefined;
+			if (existing && existing.submittedAt === submittedAtMs && existing.completed === completed && hasRespondentData) {
+				skipped += 1;
+				continue;
+			}
+
 			const payload = {
 				formId: args.formId,
 				submissionId: submission.submissionId,
 				submittedAt: submittedAtMs === null ? undefined : submittedAtMs,
 				completed,
 				syncedAt: Date.now(),
+				respondentName,
+				respondentLinkedIn,
 			};
 
 			let submissionId = existing?._id;
@@ -85,6 +103,7 @@ export const syncSubmissions = mutation({
 			total: args.submissions.length,
 			inserted: inserts,
 			updated: upserts,
+			skipped,
 		};
 	},
 });
@@ -117,5 +136,79 @@ export const getRecentSummaries = query({
 		}
 
 		return results;
+	},
+});
+
+export const getAllAnswersForChat = query({
+	args: {
+		formId: v.string(),
+	},
+	handler: async (ctx, args) => {
+		const submissions = await ctx.db
+			.query("tallySubmissions")
+			.withIndex("by_form_synced", (q) => q.eq("formId", args.formId))
+			.order("desc")
+			.collect();
+
+		const formattedAnswers = [];
+
+		for (const submission of submissions) {
+			const answers = await ctx.db
+				.query("tallyAnswers")
+				.withIndex("by_submission", (q) => q.eq("submissionId", submission._id))
+				.collect();
+
+			for (const answer of answers) {
+				let value = "";
+				if (answer.valueString) value = answer.valueString;
+				else if (answer.valueNumber !== undefined) value = String(answer.valueNumber);
+				else if (answer.valueBoolean !== undefined) value = String(answer.valueBoolean);
+				else if (answer.valueList) value = answer.valueList.join(", ");
+
+				formattedAnswers.push({
+					question: answer.label,
+					answer: value,
+					type: answer.type,
+					submissionId: submission.submissionId,
+					respondentName: submission.respondentName,
+					respondentLinkedIn: submission.respondentLinkedIn,
+				});
+			}
+		}
+
+		return formattedAnswers;
+	},
+});
+
+export const clearAllTallyData = mutation({
+	args: {
+		formId: v.string(),
+	},
+	handler: async (ctx, args) => {
+		const submissions = await ctx.db
+			.query("tallySubmissions")
+			.withIndex("by_form_synced", (q) => q.eq("formId", args.formId))
+			.collect();
+
+		let deletedAnswers = 0;
+		let deletedSubmissions = 0;
+
+		for (const submission of submissions) {
+			const answers = await ctx.db
+				.query("tallyAnswers")
+				.withIndex("by_submission", (q) => q.eq("submissionId", submission._id))
+				.collect();
+
+			await Promise.all(answers.map((answer) => ctx.db.delete(answer._id)));
+			deletedAnswers += answers.length;
+
+			await ctx.db.delete(submission._id);
+			deletedSubmissions += 1;
+		}
+
+		return {
+			deletedSubmissions,
+			deletedAnswers,
+		};
 	},
 });

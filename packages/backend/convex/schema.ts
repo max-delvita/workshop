@@ -27,6 +27,8 @@ export default defineSchema({
 		submittedAt: v.optional(v.number()),
 		completed: v.boolean(),
 		syncedAt: v.number(),
+		respondentName: v.optional(v.string()),
+		respondentLinkedIn: v.optional(v.string()),
 	})
 		.index("by_form_submission", ["formId", "submissionId"])
 		.index("by_form_synced", ["formId", "syncedAt"]),

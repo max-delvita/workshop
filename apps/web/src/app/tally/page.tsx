@@ -1,5 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTallyInsights } from "@/lib/get-tally-insights";
+import { ChatWidget } from "@/components/chat-widget";
+import { fetchQuery } from "convex/nextjs";
+import { api } from "@workshop/backend/convex/_generated/api";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
 	dateStyle: "medium",
@@ -13,6 +16,8 @@ const BAR_COLORS = [
 	"bg-amber-500",
 	"bg-emerald-500",
 ] as const;
+
+const DEFAULT_FORM_ID = "wor9ON";
 
 export const revalidate = 300;
 
@@ -35,6 +40,16 @@ function formatDate(iso?: string) {
 
 export default async function TallyPage() {
 	const insights = await getTallyInsights();
+
+	// Fetch chat data for the AI interface - fallback to empty if Convex is unavailable
+	const formId = process.env.TALLY_FORM_ID ?? DEFAULT_FORM_ID;
+	let chatData: Array<{ question: string; answer: string; type: string; submissionId: string }> = [];
+
+	try {
+		chatData = await fetchQuery(api.tally.getAllAnswersForChat, { formId });
+	} catch (error) {
+		console.error("Failed to fetch chat data from Convex, chat will be unavailable:", error);
+	}
 
 	if (insights.kind === "error") {
 		return (
@@ -222,6 +237,8 @@ export default async function TallyPage() {
 			<footer className="mt-12 text-center text-xs text-muted-foreground">
 				Data refreshes every 5 minutes. Re-run the page to pick up latest submissions.
 			</footer>
+
+			<ChatWidget chatData={chatData} />
 		</div>
 	);
 }

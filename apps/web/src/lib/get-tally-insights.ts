@@ -25,7 +25,7 @@ export async function getTallyInsights(): Promise<TallyInsightsResult> {
 			const persistResult = await persistTallySubmissions(responses);
 			if (persistResult) {
 				console.log(
-					`Successfully persisted ${persistResult.total} submissions to Convex (${persistResult.inserted} new, ${persistResult.updated} updated)`
+					`Successfully synced ${persistResult.total} submissions to Convex (${persistResult.inserted} new, ${persistResult.updated} updated, ${persistResult.skipped} skipped)`
 				);
 			}
 		} catch (convexError) {

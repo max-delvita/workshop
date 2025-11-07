@@ -46,7 +46,8 @@ export interface AggregatedTallyData {
 }
 
 const TEXT_SAMPLE_LIMIT = 100;
-export const EXCLUDED_QUESTION_KEYS = new Set(["Wz0E5Q", "QV0WQX", "7xZL1R"]);
+// Only exclude email - name and LinkedIn are now stored as respondent fields but also kept as answers
+export const EXCLUDED_QUESTION_KEYS = new Set(["QV0WQX"]);
 
 function isChoiceType(type: string) {
 	const normalized = type.toLowerCase();
