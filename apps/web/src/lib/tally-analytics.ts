@@ -45,7 +45,7 @@ export interface AggregatedTallyData {
 	questions: QuestionInsight[];
 }
 
-const TEXT_SAMPLE_LIMIT = 3;
+const TEXT_SAMPLE_LIMIT = 100;
 export const EXCLUDED_QUESTION_KEYS = new Set(["Wz0E5Q", "QV0WQX", "7xZL1R"]);
 
 function isChoiceType(type: string) {
