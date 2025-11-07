@@ -1,7 +1,7 @@
 "use client";
 
 import { Send, Loader2, Bot, User } from "lucide-react";
-import { useRef, useEffect, useState, FormEvent } from "react";
+import { useRef, useEffect, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
