@@ -5,7 +5,14 @@
 		"build": {
 			"dependsOn": ["^build"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*"],
-			"outputs": [".next/**", "!.next/cache/**"]
+			"outputs": [".next/**", "!.next/cache/**"],
+			"env": [
+				"TALLY_API_KEY",
+				"TALLY_FORM_ID",
+				"TALLY_SYNC_TOKEN",
+				"OPENAI_API_KEY",
+				"NEXT_PUBLIC_CONVEX_URL"
+			]
 		},
 		"lint": {
 			"dependsOn": ["^lint"]
