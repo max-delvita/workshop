@@ -50,7 +50,6 @@ When answering questions:
 			messages,
 			system: systemPrompt,
 			temperature: 0.7,
-			maxTokens: 1000,
 		});
 
 		return result.toTextStreamResponse();
